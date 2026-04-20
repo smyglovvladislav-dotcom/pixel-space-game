@@ -1,0 +1,56 @@
+let tank;
+let menuActive = false;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  tank = {
+    name: "HEAVY TANK S-1",
+    totalMass: 120, 
+    fuel: 108,
+    maxFuel: 108,
+    density: 1.2,
+    x: width / 2,
+    y: height / 2,
+    w: 120,
+    h: 180
+  };
+}
+
+function draw() {
+  background(15);
+  drawTank(tank);
+  if (menuActive) drawSteampunkMenu(tank);
+}
+
+function drawTank(t) {
+  push();
+  rectMode(CENTER);
+  stroke(180, 130, 70); 
+  strokeWeight(4);
+  fill(45, 50, 55);
+  rect(t.x, t.y, t.w, t.h, 15);
+  pop();
+}
+
+function drawSteampunkMenu(t) {
+  push();
+  let mX = t.x + 80;
+  let mY = t.y - 100;
+  fill(80, 50, 30, 230);
+  stroke(200, 160, 100);
+  strokeWeight(3);
+  rect(mX, mY, 200, 140, 10);
+  noStroke();
+  fill(255, 230, 150);
+  textSize(16);
+  text("UNIT: " + t.name, mX + 15, mY + 30);
+  text("FUEL: " + t.fuel + " T", mX + 15, mY + 60);
+  text("MASS: " + t.totalMass + " T", mX + 15, mY + 85);
+  text("DENSITY: " + t.density, mX + 15, mY + 115);
+  pop();
+}
+
+function mousePressed() {
+  let d = dist(mouseX, mouseY, tank.x, tank.y);
+  if (d < 80) menuActive = !menuActive;
+}
