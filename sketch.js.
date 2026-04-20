@@ -1,5 +1,11 @@
+let tankImg;
 let tank;
 let menuActive = false;
+
+function preload() {
+  // Загружаем твою картинку по точному имени
+  tankImg = loadImage('IMG_20260420_160931 (1).png');
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -11,46 +17,51 @@ function setup() {
     density: 1.2,
     x: width / 2,
     y: height / 2,
-    w: 120,
-    h: 180
+    w: 200, // Сделаем покрупнее, чтобы рассмотреть спрайт
+    h: 250 
   };
 }
 
 function draw() {
   background(15);
-  drawTank(tank);
-  if (menuActive) drawSteampunkMenu(tank);
-}
+  
+  if (tankImg) {
+    imageMode(CENTER);
+    image(tankImg, tank.x, tank.y, tank.w, tank.h);
+  }
 
-function drawTank(t) {
-  push();
-  rectMode(CENTER);
-  stroke(180, 130, 70); 
-  strokeWeight(4);
-  fill(45, 50, 55);
-  rect(t.x, t.y, t.w, t.h, 15);
-  pop();
+  if (menuActive) drawSteampunkMenu(tank);
 }
 
 function drawSteampunkMenu(t) {
   push();
-  let mX = t.x + 80;
-  let mY = t.y - 100;
+  let mX = t.x + 100;
+  let mY = t.y - 120;
+  
+  // Стимпанк рамка
   fill(80, 50, 30, 230);
   stroke(200, 160, 100);
   strokeWeight(3);
-  rect(mX, mY, 200, 140, 10);
+  rect(mX, mY, 220, 150, 10);
+  
   noStroke();
   fill(255, 230, 150);
   textSize(16);
   text("UNIT: " + t.name, mX + 15, mY + 30);
-  text("FUEL: " + t.fuel + " T", mX + 15, mY + 60);
-  text("MASS: " + t.totalMass + " T", mX + 15, mY + 85);
-  text("DENSITY: " + t.density, mX + 15, mY + 115);
+  
+  // Шкала топлива (оранжевая)
+  fill(255, 100, 0);
+  rect(mX + 15, mY + 45, 180 * (t.fuel/t.maxFuel), 10);
+  
+  fill(255, 230, 150);
+  text("FUEL: " + t.fuel + " T", mX + 15, mY + 75);
+  text("MASS: " + t.totalMass + " T", mX + 15, mY + 100);
+  text("DENSITY: " + t.density, mX + 15, mY + 125);
   pop();
 }
 
 function mousePressed() {
+  // Клик по области бака
   let d = dist(mouseX, mouseY, tank.x, tank.y);
-  if (d < 80) menuActive = !menuActive;
+  if (d < 100) menuActive = !menuActive;
 }
