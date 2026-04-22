@@ -3,52 +3,72 @@ let tank;
 let menuActive = false;
 
 function preload() {
-  tankImg = loadImage('IMG_20260420_160931 (1).png');
+  tankImg = loadImage('tank.png');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  imageMode(CENTER);
+  textFont('sans-serif');
+
   tank = {
     name: "HEAVY TANK S-1",
-    totalMass: 120, 
-    fuel: 108,
-    maxFuel: 108,
+    totalMass: 120,
+    fuel: 100,
+    maxFuel: 100,
     density: 1.2,
     x: width / 2,
     y: height / 2,
     w: 200,
-    h: 250 
+    h: 250
   };
 }
 
 function draw() {
-  background(15);
-  if (tankImg) {
-    imageMode(CENTER);
+  background(0);
+
+  // Если картинка загрузилась
+  if (tankImg && tankImg.width > 0) {
     image(tankImg, tank.x, tank.y, tank.w, tank.h);
+  } else {
+    // fallback если не загрузилась
+    fill(255, 0, 0);
+    rectMode(CENTER);
+    rect(tank.x, tank.y, 100, 100);
   }
-  if (menuActive) drawSteampunkMenu(tank);
+
+  if (menuActive) drawTankMenu(tank);
 }
 
-function drawSteampunkMenu(t) {
+function drawTankMenu(t) {
   push();
-  let mX = t.x + 80;
-  let mY = t.y - 100;
-  fill(80, 50, 30, 230);
-  stroke(200, 160, 100);
-  strokeWeight(3);
-  rect(mX, mY, 200, 140, 10);
+
+  let mx = t.x + 120;
+  let my = t.y - 80;
+
+  fill(30, 30, 35, 220);
+  stroke(255, 50);
+  rect(mx, my, 220, 140, 6);
+
   noStroke();
-  fill(255, 230, 150);
-  textSize(16);
-  text("UNIT: " + t.name, mX + 15, mY + 30);
-  text("FUEL: " + t.fuel + " T", mX + 15, mY + 60);
-  text("MASS: " + t.totalMass + " T", mX + 15, mY + 85);
-  text("DENSITY: " + t.density, mX + 15, mY + 110);
+  fill(255);
+  textSize(14);
+
+  text("UNIT: " + t.name, mx + 10, my + 25);
+  text("FUEL: " + t.fuel + " / " + t.maxFuel, mx + 10, my + 50);
+  text("MASS: " + t.totalMass, mx + 10, my + 75);
+  text("DENSITY: " + t.density, mx + 10, my + 100);
+
   pop();
 }
 
 function mousePressed() {
   let d = dist(mouseX, mouseY, tank.x, tank.y);
-  if (d < 100) menuActive = !menuActive;
+  if (d < 120) {
+    menuActive = !menuActive;
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
