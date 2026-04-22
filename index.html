@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Pixel Space Game</title>
+  <title>Test</title>
 
   <!-- p5.js -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #000;
-    }
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
 
-<body>
-  <script src="sketch.js"></script>
+<body style="margin:0; padding:0; background:black;">
+
+<script>
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  background(255, 0, 0); // ДОЛЖЕН БЫТЬ КРАСНЫЙ ЭКРАН
+}
+</script>
+
 </body>
 </html>
