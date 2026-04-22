@@ -3,7 +3,7 @@ let tank;
 let menuActive = false;
 
 function preload() {
-  tankImg = loadImage('tank.png'); // ← ВАЖНО: имя файла
+  tankImg = loadImage('./tank.png'); // ← ВАЖНО: имя файла
 }
 
 function setup() {
