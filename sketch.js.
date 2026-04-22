@@ -5,8 +5,10 @@ let menuActive = false;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  // грузим картинку (без preload!)
-  tankImg = loadImage('tank.png');
+  // 🔥 ПРЯМАЯ ССЫЛКА (как ты просил)
+  tankImg = loadImage(
+    'https://smyglovvladislav-dotcom.github.io/pixel-space-game/tank.png'
+  );
 
   tank = {
     name: "HEAVY TANK S-1",
@@ -26,15 +28,20 @@ function setup() {
 function draw() {
   background(15);
 
-  // танк
-  if (tankImg) {
-    image(tankImg, tank.x - tank.w/2, tank.y - tank.h/2, tank.w, tank.h);
+  if (tankImg && tankImg.width > 0) {
+    image(
+      tankImg,
+      tank.x - tank.w / 2,
+      tank.y - tank.h / 2,
+      tank.w,
+      tank.h
+    );
   } else {
     fill(255);
-    text("loading...", 50, 50);
+    textSize(20);
+    text("IMAGE NOT LOADED", 50, 50);
   }
 
-  // меню
   if (menuActive) {
     drawMenu(tank);
   }
@@ -65,7 +72,6 @@ function drawMenu(t) {
 
 function mousePressed() {
   let d = dist(mouseX, mouseY, tank.x, tank.y);
-
   if (d < 120) {
     menuActive = !menuActive;
   }
