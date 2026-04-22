@@ -1,7 +1,76 @@
+let tankImg;
+let tank;
+let menuActive = false;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  // грузим картинку (без preload!)
+  tankImg = loadImage('tank.png');
+
+  tank = {
+    name: "HEAVY TANK S-1",
+    totalMass: 120,
+    fuel: 100,
+    maxFuel: 100,
+    density: 1.2,
+    x: width / 2,
+    y: height / 2,
+    w: 200,
+    h: 200
+  };
+
+  textFont('sans-serif');
 }
 
 function draw() {
-  background(255, 0, 0); // ДОЛЖЕН БЫТЬ КРАСНЫЙ ЭКРАН
+  background(15);
+
+  // танк
+  if (tankImg) {
+    image(tankImg, tank.x - tank.w/2, tank.y - tank.h/2, tank.w, tank.h);
+  } else {
+    fill(255);
+    text("loading...", 50, 50);
+  }
+
+  // меню
+  if (menuActive) {
+    drawMenu(tank);
+  }
+}
+
+function drawMenu(t) {
+  push();
+
+  let mx = t.x + 120;
+  let my = t.y - 100;
+
+  fill(30, 30, 35, 230);
+  stroke(200, 160, 100);
+  strokeWeight(2);
+  rect(mx, my, 220, 140, 6);
+
+  noStroke();
+  fill(255, 230, 150);
+  textSize(16);
+
+  text("UNIT: " + t.name, mx + 15, my + 30);
+  text("FUEL: " + t.fuel + " / " + t.maxFuel, mx + 15, my + 60);
+  text("MASS: " + t.totalMass + " T", mx + 15, my + 85);
+  text("DENSITY: " + t.density, mx + 15, my + 110);
+
+  pop();
+}
+
+function mousePressed() {
+  let d = dist(mouseX, mouseY, tank.x, tank.y);
+
+  if (d < 120) {
+    menuActive = !menuActive;
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
