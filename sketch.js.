@@ -3,7 +3,7 @@ let tank;
 let menuActive = false;
 
 function preload() {
-  tankImg = loadImage('tank.png');
+  tankImg = loadImage('tank.png'); // ← ВАЖНО: имя файла
 }
 
 function setup() {
@@ -25,45 +25,46 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(15);
 
-  // Если картинка загрузилась
-  if (tankImg && tankImg.width > 0) {
+  // Рисуем бак
+  if (tankImg) {
     image(tankImg, tank.x, tank.y, tank.w, tank.h);
-  } else {
-    // fallback если не загрузилась
-    fill(255, 0, 0);
-    rectMode(CENTER);
-    rect(tank.x, tank.y, 100, 100);
   }
 
-  if (menuActive) drawTankMenu(tank);
+  // Меню
+  if (menuActive) {
+    drawSteampunkMenu(tank);
+  }
 }
 
-function drawTankMenu(t) {
+function drawSteampunkMenu(t) {
   push();
 
   let mx = t.x + 120;
-  let my = t.y - 80;
+  let my = t.y - 100;
 
-  fill(30, 30, 35, 220);
-  stroke(255, 50);
+  // фон
+  fill(30, 30, 35, 230);
+  stroke(200, 160, 100);
+  strokeWeight(2);
   rect(mx, my, 220, 140, 6);
 
   noStroke();
-  fill(255);
-  textSize(14);
+  fill(255, 230, 150);
+  textSize(16);
 
-  text("UNIT: " + t.name, mx + 10, my + 25);
-  text("FUEL: " + t.fuel + " / " + t.maxFuel, mx + 10, my + 50);
-  text("MASS: " + t.totalMass, mx + 10, my + 75);
-  text("DENSITY: " + t.density, mx + 10, my + 100);
+  text("UNIT: " + t.name, mx + 15, my + 30);
+  text("FUEL: " + t.fuel + " / " + t.maxFuel, mx + 15, my + 60);
+  text("MASS: " + t.totalMass + " T", mx + 15, my + 85);
+  text("DENSITY: " + t.density, mx + 15, my + 110);
 
   pop();
 }
 
 function mousePressed() {
   let d = dist(mouseX, mouseY, tank.x, tank.y);
+
   if (d < 120) {
     menuActive = !menuActive;
   }
