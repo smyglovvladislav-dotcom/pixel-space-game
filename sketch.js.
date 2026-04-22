@@ -1,79 +1,26 @@
 let tankImg;
-let tank;
-let menuActive = false;
+
+function preload() {
+  // ВАЖНО: без ./ 
+  tankImg = loadImage('tank.png');
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  // 🔥 ПРЯМАЯ ССЫЛКА (как ты просил)
-  tankImg = loadImage(
-    'https://smyglovvladislav-dotcom.github.io/pixel-space-game/tank.png'
-  );
-
-  tank = {
-    name: "HEAVY TANK S-1",
-    totalMass: 120,
-    fuel: 100,
-    maxFuel: 100,
-    density: 1.2,
-    x: width / 2,
-    y: height / 2,
-    w: 200,
-    h: 200
-  };
-
-  textFont('sans-serif');
+  imageMode(CENTER);
 }
 
 function draw() {
-  background(15);
+  background(0);
 
-  if (tankImg && tankImg.width > 0) {
-    image(
-      tankImg,
-      tank.x - tank.w / 2,
-      tank.y - tank.h / 2,
-      tank.w,
-      tank.h
-    );
+  // Проверка загрузки
+  if (tankImg) {
+    image(tankImg, width / 2, height / 2, 200, 200);
   } else {
+    // Если не загрузилось — увидишь это
     fill(255);
     textSize(20);
-    text("IMAGE NOT LOADED", 50, 50);
-  }
-
-  if (menuActive) {
-    drawMenu(tank);
-  }
-}
-
-function drawMenu(t) {
-  push();
-
-  let mx = t.x + 120;
-  let my = t.y - 100;
-
-  fill(30, 30, 35, 230);
-  stroke(200, 160, 100);
-  strokeWeight(2);
-  rect(mx, my, 220, 140, 6);
-
-  noStroke();
-  fill(255, 230, 150);
-  textSize(16);
-
-  text("UNIT: " + t.name, mx + 15, my + 30);
-  text("FUEL: " + t.fuel + " / " + t.maxFuel, mx + 15, my + 60);
-  text("MASS: " + t.totalMass + " T", mx + 15, my + 85);
-  text("DENSITY: " + t.density, mx + 15, my + 110);
-
-  pop();
-}
-
-function mousePressed() {
-  let d = dist(mouseX, mouseY, tank.x, tank.y);
-  if (d < 120) {
-    menuActive = !menuActive;
+    text("IMG NOT LOADED", 20, 40);
   }
 }
 
